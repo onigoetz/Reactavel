@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+$dirRoot = __DIR__;
+
+// Load the autoloader
+if (file_exists(__DIR__ . '/../../../autoload.php')) {
+    //in a composer installation
+    require_once __DIR__ . '/../../../autoload.php';
+    $dirRoot = __DIR__ . '/../../../..';
+} else {
+    //directly from the binary
+    require_once __DIR__ . '/../../vendor/autoload.php';
+    $dirRoot = __DIR__ . '/../..';
+}
+
+$laravel = new Onigoetz\Reactavel\Reactavel($dirRoot);
+$laravel->run(8080);

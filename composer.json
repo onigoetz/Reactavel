@@ -1,0 +1,28 @@
+{
+    "name": "onigoetz/reactavel",
+    "description": "Use Laravel on ReactPHP",
+    "homepage": "https://github.com/onigoetz/reactavel",
+    "keywords": ["laravel", "l4", "reactphp"],
+    "authors": [
+        {
+            "name": "Stephane Goetz",
+            "email": "onigoetz@onigoetz.ch"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "react/react": "0.5.*@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.0.0",
+        "squizlabs/php_codesniffer": ">=1.0.0",
+        "phpmd/phpmd": "*",
+        "mockery/mockery": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Onigoetz\\Reactavel\\": "src/"
+        }
+    },
+    "bin": ["bin/reactavel"]
+}
