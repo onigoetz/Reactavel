@@ -19,7 +19,7 @@ class Reactavel
     {
         $this->app = require_once $dir . '/bootstrap/start.php';
 
-        echo 'Laravel initialized';
+        echo "Laravel initialized\n";
     }
 
     public function serve(Request $request, Response $response)
@@ -38,7 +38,9 @@ class Reactavel
         $http->on('request', [$this, 'serve']);
 
         $socket->listen($port);
-        $loop->run();
 
+        echo "Reactavel server started on localhost:$port\n";
+
+        $loop->run();
     }
 }

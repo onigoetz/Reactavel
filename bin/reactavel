@@ -14,5 +14,10 @@ if (file_exists(__DIR__ . '/../../../autoload.php')) {
     $dirRoot = __DIR__ . '/../..';
 }
 
+$port = 8080;
+if (array_key_exists(1, $argv)) {
+    $port = $argv[1];
+}
+
 $laravel = new Onigoetz\Reactavel\Reactavel($dirRoot);
-$laravel->run(8080);
+$laravel->run($port);
