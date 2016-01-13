@@ -2,7 +2,7 @@
     "name": "onigoetz/reactavel",
     "description": "Use Laravel on ReactPHP",
     "homepage": "https://github.com/onigoetz/reactavel",
-    "keywords": ["laravel", "l4", "reactphp"],
+    "keywords": ["laravel", "l5", "lumen", "reactphp"],
     "authors": [
         {
             "name": "Stephane Goetz",

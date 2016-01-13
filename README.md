@@ -1,51 +1,56 @@
 # Reactavel
 
-Laravel framework on top of ReactPHP
+Running Lumen on top of ReactPHP, making fast even faster.
+
+> This is just an experiment and you should not let this near your production environment.
 
 ## Why ?
-Mainly as an experiment, I wanted to try to discover if the performance boost you get by using a "pre-bootstrapped framework" is worth the pain to put in place.
 
-This highly alpha and nothing near production, but you can try it if you feel like it
+1. for fun !
+2. I wanted to see if we can get a big performance boost by just running the request through the framework, without all the initialization.
 
 ## Goals
 
 I have some ideas for this project, we'll se if we can get something out of it.
 
-- Laravel compatibility, even with Reactavel enabled, and app still should be able to run in an apache server or with `./artisan serve`
-- Make sessions work correctly
-- Decode Http request correctly (Cookies, POST, GET, File uploads)
+- A Reactavel enabled installation should still run on apache normally (√ Already working)
+- Decode Http request correctly (Cookies, POST, GET, File uploads) (√ Mostly working, Cookies not implemented)
 
-
-## Wanna try at home ?
-
-With these 4 easy steps you can try the laravel default page
+## Installation
 
 ```
-composer create-project --prefer-dist -sdev laravel/laravel reactavel dev-develop
-cd reactavel/
 composer require onigoetz/reactavel dev-master
-sed -i.bak s/Illuminate\\\\Foundation\\\\Application/Onigoetz\\\\Reactavel\\\\Application/g bootstrap/start.php
 ```
 
-You are now ready to try :
+You are now ready to roll by running:  `./vendor/bin/reactavel`
 
-```
-./vendor/bin/reactavel 
+If performance is your main goal, you can also try this with HHVM : `hhvm -v"Eval.Jit=true" ./vendor/bin/reactavel`
+
+## Routes
+
+In the context of an application server, you can't rely on global variables or instances, as they might have informations from other users.
+In that case, it is recommended to request the Request and/or the Application in your Controller or route.
+
+```php
+use Laravel\Lumen\Application;
+use Illuminate\Http\Request;
+
+$app->get(
+    '/',
+    function (Application $app) {
+        return $app->version();
+    }
+);
+
+$app->get(
+    '/user/{id}',
+    function ($id, Request $request) {
+        return [$id, $request->cookies->all()];
+    }
+);
 ```
 
-or
-
-```
-hhvm -v"Eval.Jit=true" ./vendor/bin/reactavel
-```
-
-to compare, you can also run 
-
-```
-./artisan serve
-```
-
-### static files
+### Static files
 
 Here is a sample configuration for nginx to serve static files
 
@@ -73,3 +78,9 @@ server {
     try_files $uri @reactavel;
 }
 ```
+
+## A few words about state
+
+Because now that all requests run in the same thread, without any cleanup, any state left behind by another request might have side effects.
+
+Be careful with that.
